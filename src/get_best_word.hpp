@@ -14,6 +14,13 @@
 
 namespace Wordle
 {
+    struct WordScore
+    {
+        Word word;
+        LongInt averageKnockout;
+        std::size_t numRemainingWords;
+    };
+
     /**
      * @brief Find the best word to guess given optional constraints
      * @param positionFilterFilename Path to file with known letter positions (optional)
@@ -23,7 +30,7 @@ namespace Wordle
      * Analyzes all possible words and selects the one that eliminates
      * the most candidates on average.
      */
-    Word getBestWord(const std::string& positionFilterFilename = "", bool onlyGuessPossibleWords = false, bool verbose = false);
+    WordScore getBestWord(const std::string& positionFilterFilename = "", bool onlyGuessPossibleWords = false, bool verbose = false);
     
     /**
      * @brief Find best word given already-guessed words
@@ -33,7 +40,7 @@ namespace Wordle
      * @param verbose If true, print progress information
      * @return The optimal next word to guess
      */
-    Word getBestWordWithExistingGuesses(const std::vector<Word>& p_alreadyGuessedWords,
+    WordScore getBestWordWithExistingGuesses(const std::vector<Word>& p_alreadyGuessedWords,
         const std::vector<Word>& p_wordsStillAvailableToGuess,
         const std::vector<Word>& p_wordsStillPossible,
         bool verbose = true);

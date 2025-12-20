@@ -128,16 +128,4 @@ namespace Wordle
         return BoardWithKnownAnswer(*this);
     }
 
-    void BoardWithKnownAnswer::addGreyLetter(std::size_t position, Letter letter)
-    {
-        updateLetterIsPossibleInSpaceWithIncorrectGuess(position, letter);
-    }
-    void BoardWithKnownAnswer::addGreenLetter(std::size_t position, Letter letter)
-    {
-        updateLetterIsPossibleInSpaceWithCorrectGuess(position, letter);
-    }
-    void BoardWithKnownAnswer::addYellowLetter(std::size_t position, Letter letter)
-    {
-        
-    }
 } // namespace Wordle

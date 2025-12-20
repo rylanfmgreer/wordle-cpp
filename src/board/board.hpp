@@ -78,29 +78,7 @@ namespace Wordle
          * @return New BoardWithKnownAnswer with identical state
          */
         BoardWithKnownAnswer copy() const;
-
-        /**
-         * @brief Add a grey (not in word) letter constraint
-         * @param position Position where letter was guessed
-         * @param letter Letter to mark as grey
-         */
-        void addGreyLetter(std::size_t position, Letter letter);
-        
-        /**
-         * @brief Add a green (correct position) letter constraint
-         * @param position Position of correct letter
-         * @param letter Letter at that position
-         */
-        void addGreenLetter(std::size_t position, Letter letter);
-        
-        /**
-         * @brief Add a yellow (wrong position) letter constraint
-         * @param position Position where letter was guessed
-         * @param letter Letter that exists elsewhere
-         */
-        void addYellowLetter(std::size_t position, Letter letter);
     
-
         private:
         Word correct_word;                                        ///< The target word
         bool letter_is_possible_in_space[ALPHABET_SIZE * WORD_LENGTH];  ///< Letter possibility matrix

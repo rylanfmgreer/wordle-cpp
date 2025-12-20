@@ -1,40 +1,20 @@
 #ifndef PRINT_FUNCTIONS_HPP
 #define PRINT_FUNCTIONS_HPP
 #include "print_constants.hpp"
+#include "../datatypes.hpp"
 #include "../word/word.hpp"
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <thread>
+#include <chrono>
 
-void printBestWord(const Wordle::Word& best_word)
-{
-    std::cout << "\n";
-    std::cout << TOP_BAR << "\n";
-    std::cout << TITLE_BAR << "\n";
-
-    std::cout << MID_BAR << "\n";
-    std::cout << BAR_FORMAT<< "  ║" << RESET << "             " << BOLD << GREEN << MAGENTA << best_word.getBaseWord() << RESET << "              " << BAR_FORMAT<< "║" << RESET << "\n";
-    std::cout << BOT_BAR << "\n";
-    std::cout << "\n";
-}
-
-void printAssetFromFilename(const std::string& filename, const std::string& prefix = "")
-{
-    std::ifstream file(filename);
-    if (!file.is_open())
-    {
-        std::cerr << "Error: Could not open file " << filename << "\n";
-        return;
-    }
-
-    std::string line;
-    std::cout << prefix;
-    while (std::getline(file, line))
-    {
-        std::cout <<prefix <<  line << "\n";
-    }
-
-    file.close();
-}
-
+void printBestWord(const Wordle::Word& best_word);
+int printAssetFromFilename(const std::string& filename, const std::string& prefix = "");
+void backspacePrint(int n);
+void blinkAssetNTimes(const std::string& filename, int n_times, int delay_ms=500, const std::string& prefix = "");
+std::string generateBestWordPrintStr(const Wordle::Word& best_word);
+int printNumberOfWordsKnockedOut(const std::string& prefix, Wordle::LongInt n_words_knocked_out, Wordle::LongInt n_remaining_words);
+std::string getEmojiFromConfigValue(const std::string& config_filepath);
+std::string generateTitleBar(const std::string& emoji);
 #endif // PRINT_FUNCTIONS_HPP

@@ -15,7 +15,7 @@ namespace Wordle
         std::cout << "  " << BOLD + MAGENTA << word.getBaseWord() << RESET << " knocks out " << BOLD << ko << RESET << " words on average\n";
     }
 
-    Word getBestWordWithExistingGuesses(const std::vector<Word>& p_alreadyGuessedWords,
+    WordScore getBestWordWithExistingGuesses(const std::vector<Word>& p_alreadyGuessedWords,
         const std::vector<Word>& p_wordsAvailableToGuess,
         const std::vector<Word>& p_wordsThatAreStillPossible,
         bool verbose)
@@ -39,8 +39,8 @@ namespace Wordle
                 printWordKnockout(p_wordsAvailableToGuess[guess_word_index], average_KO);
 
         }
-
-        return p_wordsAvailableToGuess[best_word_index];
+        int best_ko = (infinity - 1 - best_score) / p_wordsThatAreStillPossible.size();
+        return WordScore{p_wordsAvailableToGuess[best_word_index], best_ko, p_wordsThatAreStillPossible.size()};
     }
     LongInt testWordWithExistingGuesses(const Word& guess_word, const std::vector<Word>& already_guessed_words, const std::vector<Word>& possible_words)
     {
@@ -64,7 +64,7 @@ namespace Wordle
         return testWordWithExistingGuesses(guess_word, already_guessed_words, possible_words);
     }
 
-    Word getBestWord(const std::string& positionFilterFilename, bool onlyGuessPossibleWords, bool verbose)
+    WordScore getBestWord(const std::string& positionFilterFilename, bool onlyGuessPossibleWords, bool verbose)
     {
         // I am sure there is a more efficient way to do this...
         std::vector<Word> wordsAvailableToGuess = createWordList();
@@ -76,7 +76,8 @@ namespace Wordle
         if(onlyGuessPossibleWords)
             wordsAvailableToGuess = possibleWords;
         
-        return getBestWordWithExistingGuesses({}, wordsAvailableToGuess, possibleWords, verbose);
+        WordScore best_word_score = getBestWordWithExistingGuesses({}, wordsAvailableToGuess, possibleWords, verbose);
+        return best_word_score;
     }
 
 }

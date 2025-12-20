@@ -1,0 +1,18 @@
+To use this software:
+1. Create a file named `wordle_positions.txt` in the root directory of the project with the following format:
+
+    Suppose your guess was RAISE and the feedback was 🟩🟩⬜🟨⬜
+    You would input:
+
+    green:
+    r1 a2
+        
+    yellow:
+    s4
+            
+    grey:
+    i3 e5
+
+2. Run the compiled program. You can optionally provide the path to your
+   wordle_positions.txt file as a command-line argument.
+   f no argument is provided, it will default to wordle_positions.txt.
