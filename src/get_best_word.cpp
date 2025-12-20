@@ -8,12 +8,17 @@ namespace Wordle
 
     void printWordKnockout(const Word& word, LongInt ko)
     {
-        std::cout << "Word: " << word.getBaseWord() << " knocks out " << ko << " words on average\n";
+        const std::string BOLD = "\033[1m";
+        const std::string MAGENTA = "\033[35m";
+        const std::string RESET = "\033[0m";
+        
+        std::cout << "  " << BOLD + MAGENTA << word.getBaseWord() << RESET << " knocks out " << BOLD << ko << RESET << " words on average\n";
     }
 
     Word getBestWordWithExistingGuesses(const std::vector<Word>& p_alreadyGuessedWords,
         const std::vector<Word>& p_wordsAvailableToGuess,
-        const std::vector<Word>& p_wordsThatAreStillPossible)
+        const std::vector<Word>& p_wordsThatAreStillPossible,
+        bool verbose)
     {
         LongInt infinity = p_wordsThatAreStillPossible.size() * p_wordsThatAreStillPossible.size() + 1;
         std::size_t best_word_index = 0;
@@ -30,7 +35,8 @@ namespace Wordle
             }
             // this should be a float but it doesn't matter as I don't really care about the exact value
             int average_KO = (infinity - 1 - this_score) / p_wordsThatAreStillPossible.size();
-            printWordKnockout(p_wordsAvailableToGuess[guess_word_index], average_KO);
+            if(verbose)
+                printWordKnockout(p_wordsAvailableToGuess[guess_word_index], average_KO);
 
         }
 
@@ -58,7 +64,7 @@ namespace Wordle
         return testWordWithExistingGuesses(guess_word, already_guessed_words, possible_words);
     }
 
-    Word getBestWord(const std::string& positionFilterFilename, bool onlyGuessPossibleWords)
+    Word getBestWord(const std::string& positionFilterFilename, bool onlyGuessPossibleWords, bool verbose)
     {
         // I am sure there is a more efficient way to do this...
         std::vector<Word> wordsAvailableToGuess = createWordList();
@@ -70,7 +76,7 @@ namespace Wordle
         if(onlyGuessPossibleWords)
             wordsAvailableToGuess = possibleWords;
         
-        return getBestWordWithExistingGuesses({}, wordsAvailableToGuess, possibleWords);
+        return getBestWordWithExistingGuesses({}, wordsAvailableToGuess, possibleWords, verbose);
     }
 
 }

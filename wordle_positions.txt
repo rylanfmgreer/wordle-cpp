@@ -1,0 +1,7 @@
+green:
+
+yellow:
+r1
+
+grey:
+a2 i3 s4 e5
