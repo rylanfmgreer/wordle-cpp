@@ -16,9 +16,6 @@ namespace Wordle
         Letter getLetterCount(Letter letter) const { return letter_count[letter]; }
         inline const std::string getBaseWord() const { return base_word; }
 
-
-        
-
         private:
         const std::string base_word;
         Letter letters[WORD_LENGTH];

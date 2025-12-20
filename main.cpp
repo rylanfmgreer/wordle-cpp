@@ -1,9 +1,13 @@
 #include <iostream>
 #include "src/get_best_word.hpp"
 
-int main()
+int main(int argc, char** argv)
 {
-    Wordle::Word best_word = Wordle::get_best_word();
-    std::cout << "Best word: " << best_word.get_base_word() << std::endl;
+
+    // default to wordle_positions.txt if no argument is given
+    std::string positionFilterFilename = (argc > 1) ? argv[1] : "wordle_positions.txt";
+    bool onlyGuessPossibleWords = true;
+    Wordle::Word best_word = Wordle::getBestWord(positionFilterFilename, onlyGuessPossibleWords);
+    std::cout << "Best word: " << best_word.getBaseWord() << std::endl;
     return 0;
 }

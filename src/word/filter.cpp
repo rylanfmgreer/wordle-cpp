@@ -18,7 +18,10 @@ namespace Wordle
         std::vector<Word> filtered_words;
         for (const auto& word : word_list)
         {
-            if (isWordValid(word))
+            if(word.getBaseWord() == "myrrh")
+                bool debug = true;
+            bool thisValid = isWordValid(word);
+            if (thisValid)
             {
                 filtered_words.push_back(word);
             }
@@ -47,7 +50,7 @@ namespace Wordle
         return true;
     }
 
-    int WordFilter::getPossibleCountOfThisLetterInWord(Letter letter) const
+    int WordFilter::getMinPossibleCountOfThisLetterInWord(Letter letter) const
     {
         int possibleCount = 0;
         for (const auto& lp : m_greenLetters)
@@ -62,13 +65,30 @@ namespace Wordle
         }
         return possibleCount;
     }
+
+    int WordFilter::getMaxPossibleCountOfThisLetterInWord(Letter letter) const
+    {
+        int possibleCount = WORD_LENGTH; // max possible in a 5-letter word
+        for (const auto& lp : m_greyLetters)
+        {
+            if (lp.letter == letter)
+                possibleCount = getMinPossibleCountOfThisLetterInWord(letter);
+        }
+        return possibleCount;
+    }
+
     bool WordFilter::checkGreyLetters(const Word& word) const
     {
 
         // filter 2: check positions and count
         for (const auto& lp : m_greyLetters)
         {
-            if (word.getLetterCount(lp.letter) > getPossibleCountOfThisLetterInWord(lp.letter))
+            int thisWordLc = word.getLetterCount(lp.letter);
+            int possibleMinLc = getMinPossibleCountOfThisLetterInWord(lp.letter);
+            int possibleMaxLc = getMaxPossibleCountOfThisLetterInWord(lp.letter); // grey letters imply max count is min count
+            if (thisWordLc < possibleMinLc)
+                return false;
+            if (thisWordLc > possibleMaxLc)
                 return false;
 
             if (word.getLetterAtPosition(lp.position) == lp.letter)

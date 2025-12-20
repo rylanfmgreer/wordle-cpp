@@ -39,8 +39,8 @@ namespace Wordle
         bool checkGreenLetters(const Word& word) const;
         bool checkYellowLetters(const Word& word) const;
         bool checkGreyLetters(const Word& word) const;
-        int getPossibleCountOfThisLetterInWord(Letter letter) const;
-
+        int getMinPossibleCountOfThisLetterInWord(Letter letter) const;
+        int getMaxPossibleCountOfThisLetterInWord(Letter letter) const;
 
     };
 
