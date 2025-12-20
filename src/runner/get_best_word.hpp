@@ -7,14 +7,14 @@
 #ifndef _get_best_word_wordle_hpp
 #define _get_best_word_wordle_hpp
 
-#include "board/board.hpp"
-#include "word/word.hpp"
-#include "datatypes.hpp"
+#include "../board/board.hpp"
+#include "../word/word.hpp"
+#include "../datatypes.hpp"
 #include <vector>
 
 namespace Wordle
 {
-    struct WordScore
+    struct WordResult
     {
         Word word;
         LongInt averageKnockout;
@@ -30,7 +30,7 @@ namespace Wordle
      * Analyzes all possible words and selects the one that eliminates
      * the most candidates on average.
      */
-    WordScore getBestWord(const std::string& positionFilterFilename = "", bool onlyGuessPossibleWords = false, bool verbose = false);
+    WordResult getBestWord(const std::string& positionFilterFilename = "", bool onlyGuessPossibleWords = false, bool verbose = false);
     
     /**
      * @brief Find best word given already-guessed words
@@ -40,7 +40,7 @@ namespace Wordle
      * @param verbose If true, print progress information
      * @return The optimal next word to guess
      */
-    WordScore getBestWordWithExistingGuesses(const std::vector<Word>& p_alreadyGuessedWords,
+    WordResult getBestWordWithExistingGuesses(const std::vector<Word>& p_alreadyGuessedWords,
         const std::vector<Word>& p_wordsStillAvailableToGuess,
         const std::vector<Word>& p_wordsStillPossible,
         bool verbose = true);

@@ -17,4 +17,5 @@ std::string generateBestWordPrintStr(const Wordle::Word& best_word);
 int printNumberOfWordsKnockedOut(const std::string& prefix, Wordle::LongInt n_words_knocked_out, Wordle::LongInt n_remaining_words);
 std::string getEmojiFromConfigValue(const std::string& config_filepath);
 std::string generateTitleBar(const std::string& emoji);
+void standardInialPrints();
 #endif // PRINT_FUNCTIONS_HPP

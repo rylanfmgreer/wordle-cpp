@@ -109,6 +109,28 @@ namespace Wordle
         return lp;
     }
 
+    void WordFilter::updateWithGuess(const Word& guessedWord, const Word& realWord)
+    {
+        
+        for (std::size_t i = 0; i < WORD_LENGTH; ++i)
+        {
+            Letter guessedLetter = guessedWord.getLetterAtPosition(i);
+            Letter realLetter = realWord.getLetterAtPosition(i);
+            if (guessedLetter == realLetter)
+            {
+                addGreenLetter(i, guessedLetter);
+            }
+            else if (realWord.getLetterCount(guessedLetter) > 0)
+            {
+                addYellowLetter(i, guessedLetter);
+            }
+            else
+            {
+                addGreyLetter(i, guessedLetter);
+            }
+        }
+    }
+
     void WordFilter::parsePositionsFile(const std::string& filename)
     {
         std::ifstream file(filename);

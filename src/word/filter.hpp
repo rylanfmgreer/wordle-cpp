@@ -50,7 +50,13 @@ namespace Wordle
          * @return true if the word satisfies all constraints
          */
         bool isWordValid(const Word& word) const;
-        
+
+        /**
+         * @brief Update the filter with feedback from a guess
+         * @param guessedWord The word that was guessed
+         * @param realWord The actual correct word
+         */
+        void updateWithGuess(const Word& guessedWord, const Word& realWord);
         /**
          * @brief Add a green (correct position) letter constraint
          * @param position Position in word (0-indexed)
@@ -131,6 +137,7 @@ namespace Wordle
          * @return Maximum occurrences this letter can have
          */
         int getMaxPossibleCountOfThisLetterInWord(Letter letter) const;
+
 
     };
 

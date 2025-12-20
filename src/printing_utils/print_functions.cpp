@@ -18,6 +18,7 @@ int printAssetFromFilename(const std::string& filename, const std::string& prefi
         n_chars += line.size();
         std::cout <<prefix <<  line << "\n";
     }
+    std::cout << RESET;
 
     file.close();
     return n_chars;
@@ -103,5 +104,9 @@ std::string getEmojiFromConfigValue(const std::string& config_filepath)
 
     config_file.close();
     return "🐸"; // default emoji if not found
-
+}
+void standardInialPrints()
+{
+    printAssetFromFilename("src/printing_utils/assets/title_asset.txt", BOLD);
+    printAssetFromFilename("src/printing_utils/assets/copyright_info.txt", RESET);
 }
