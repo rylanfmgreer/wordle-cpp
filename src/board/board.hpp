@@ -8,27 +8,34 @@
 
 namespace Wordle
 {
-    class Board {
+    class BoardWithKnownAnswer
+    {
         public:
-        Board(const Word& correct_word);
+        BoardWithKnownAnswer(const Word& correct_word);
+        BoardWithKnownAnswer(const BoardWithKnownAnswer& other);
         void reset();
         void guess(const Word& word);
-        bool word_could_be_solution(const Word& word) const;
-        int get_number_of_potential_solutions(const std::vector<Word>& word_list) const;
-        std::vector<Word> get_valid_words(const std::vector<Word>& word_list) const;
-        Board copy() const;
+        bool wordCouldBeSolution(const Word& word) const;
+        int getNumberOfPotentialSolutions(const std::vector<Word>& word_list) const;
+        std::vector<Word> getValidWords(const std::vector<Word>& word_list) const;
+        BoardWithKnownAnswer copy() const;
+
+        void addGreyLetter(std::size_t position, Letter letter);
+        void addGreenLetter(std::size_t position, Letter letter);
+        void addYellowLetter(std::size_t position, Letter letter);
+    
 
         private:
         Word correct_word;
         bool letter_is_possible_in_space[ALPHABET_SIZE * WORD_LENGTH];
-        SmallInt min_letters[ALPHABET_SIZE];
-        SmallInt max_letters[ALPHABET_SIZE];
+        Letter min_letters[ALPHABET_SIZE];
+        Letter max_letters[ALPHABET_SIZE];
 
-        inline std::size_t get_position_in_letter_possible_space(std::size_t row, SmallInt letter) const {return letter * WORD_LENGTH + row;}
-        void update_letter_is_possible_in_space_with_correct_guess(std::size_t position, SmallInt letter);
-        void update_letter_is_possible_in_space_with_incorrect_guess(std::size_t position, SmallInt letter);
-        void update_min_letters_with_guess(SmallInt letter_to_check, SmallInt count_in_guess);
-        void update_max_letters_with_guess(SmallInt letter_to_check, SmallInt count_in_guess);
+        inline std::size_t getPositionInLetterPossibleSpace(std::size_t row, Letter letter) const {return letter * WORD_LENGTH + row;}
+        void updateLetterIsPossibleInSpaceWithCorrectGuess(std::size_t position, Letter letter);
+        void updateLetterIsPossibleInSpaceWithIncorrectGuess(std::size_t position, Letter letter);
+        void updateMinLettersWithGuess(Letter letter_to_check, Letter count_in_guess);
+        void updateMaxLettersWithGuess(Letter letter_to_check, Letter count_in_guess);
 
     };
 }

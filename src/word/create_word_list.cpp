@@ -4,7 +4,7 @@
 
 namespace Wordle
 {
-    std::vector<Word> create_word_list(const std::string& filename)
+    std::vector<Word> createWordList(const std::string& filename)
 
     {
         std::vector<Word> word_list;

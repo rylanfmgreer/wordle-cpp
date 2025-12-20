@@ -8,8 +8,13 @@
 
 namespace Wordle
 {
-    Word get_best_word();
-    LongInt test_word(const Word& guess_word, const std::vector<Word>& possible_words);
+    Word getBestWord(const std::string& positionFilterFilename = "", bool onlyGuessPossibleWords = false);
+    Word getBestWordWithExistingGuesses(const std::vector<Word>& p_alreadyGuessedWords,
+        const std::vector<Word>& p_wordsStillAvailableToGuess,
+        const std::vector<Word>& p_wordsStillPossible);
+    LongInt testWord(const Word& p_guessWord, const std::vector<Word>& p_possibleWords);
+    LongInt testWordWithExistingGuesses(const Word& p_guessWord, const std::vector<Word>& p_alreadyGuessedWords, const std::vector<Word>& p_possibleWords);
+    void printWordKnockout(const Word& p_word, LongInt p_numKnockouts);
 }
 
 #endif // _get_best_word_wordle_hpp

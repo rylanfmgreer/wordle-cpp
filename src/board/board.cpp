@@ -2,127 +2,142 @@
 
 namespace Wordle
 {
-    Board::Board(const Word& correct_word) : correct_word(correct_word)
+    BoardWithKnownAnswer::BoardWithKnownAnswer(const Word& correct_word) : correct_word(correct_word)
     {
         reset();
     }
 
-    void Board::reset()
+    BoardWithKnownAnswer::BoardWithKnownAnswer(const BoardWithKnownAnswer& other) : correct_word(other.correct_word)
     {
-        // set all "letter is possible" to true
-        for(std::size_t i = 0; i < ALPHABET_SIZE * WORD_LENGTH; ++i)
-            letter_is_possible_in_space[i] = true;
+        // Copy the state of the other board
+        std::copy(other.letter_is_possible_in_space,
+            other.letter_is_possible_in_space + (ALPHABET_SIZE * WORD_LENGTH),
+            letter_is_possible_in_space);
+        std::copy(other.min_letters, other.min_letters + ALPHABET_SIZE, min_letters);
+        std::copy(other.max_letters, other.max_letters + ALPHABET_SIZE, max_letters);
+    }
 
-        // set all "min_letters" to 0
-        for (std::size_t i(0); i < ALPHABET_SIZE; ++i) min_letters[i] = 0;
-
-        // set all "max_letters" to WORD_LENGTH
-        for (std::size_t i(0); i < ALPHABET_SIZE; ++i) max_letters[i] = WORD_LENGTH;
+    void BoardWithKnownAnswer::reset()
+    {
+        /*
+            Default values are:
+            -- letter_is_possible_in_space: true
+            -- min_letters: 0
+            -- max_letters: WORD_LENGTH
+        */
+        std::fill(letter_is_possible_in_space, letter_is_possible_in_space + (ALPHABET_SIZE * WORD_LENGTH), true);
+        std::fill(min_letters, min_letters + ALPHABET_SIZE, 0);
+        std::fill(max_letters, max_letters + ALPHABET_SIZE, WORD_LENGTH);
     }
 
 
-    void Board::update_letter_is_possible_in_space_with_correct_guess(std::size_t position, SmallInt letter)
+    void BoardWithKnownAnswer::updateLetterIsPossibleInSpaceWithCorrectGuess(std::size_t position, Letter letter)
     {
+        /*
+            If we guess correct, put all other letters as impossible in this position
+            but keep the letter we have.
+        */
+        std::size_t idx = position;
         for(std::size_t i(0); i < ALPHABET_SIZE; ++i)
-            if(i != letter)
-            {
-                letter_is_possible_in_space[get_position_in_letter_possible_space(position, i)] = false;
-            }
-            else
-            {
-                letter_is_possible_in_space[get_position_in_letter_possible_space(position, i)] = true;
-            }
+        {
+            (i != letter) ? letter_is_possible_in_space[idx] = false : letter_is_possible_in_space[idx] = true;
+            idx += WORD_LENGTH;
+        }
     }
 
-    void Board::update_letter_is_possible_in_space_with_incorrect_guess(std::size_t position, SmallInt letter)
+    void BoardWithKnownAnswer::updateLetterIsPossibleInSpaceWithIncorrectGuess(std::size_t position, Letter letter)
     {
-        letter_is_possible_in_space[get_position_in_letter_possible_space(position, letter)] = false;
+        // Two cases:
+        // 1. The letter has not appeared in the correct word at all -> mark it as impossible in all positions
+        letter_is_possible_in_space[getPositionInLetterPossibleSpace(position, letter)] = false;
     }
 
-    void Board::update_min_letters_with_guess(SmallInt letter_to_check, SmallInt count_in_guess)
+    void BoardWithKnownAnswer::updateMinLettersWithGuess(Letter letter_to_check, Letter count_in_guess)
     {
-        // SUSPECT
-        SmallInt count_in_truth = correct_word.get_letter_count(letter_to_check);
+        /*
+            TODO: revisit as I think this approach is suspect
+        */
+        Letter count_in_truth = correct_word.getLetterCount(letter_to_check);
         if(count_in_truth < count_in_guess)
             min_letters[letter_to_check] = count_in_truth;
     }
 
-    void Board::update_max_letters_with_guess(SmallInt letter_to_check, SmallInt count_in_guess)
+    void BoardWithKnownAnswer::updateMaxLettersWithGuess(Letter letter_to_check, Letter count_in_guess)
     {
-        // SUSPECT
-        SmallInt count_in_truth = correct_word.get_letter_count(letter_to_check);
+        /*
+            TODO: revisit as I think this approach is suspect
+        */
+        Letter count_in_truth = correct_word.getLetterCount(letter_to_check);
         if(count_in_guess > count_in_truth)
             max_letters[letter_to_check] = count_in_truth;
     }
 
-    void Board::guess(const Word& word)
+    void BoardWithKnownAnswer::guess(const Word& word)
     {
         for(std::size_t i = 0; i < WORD_LENGTH; ++i)
         {
-            SmallInt letter = word.get_letter_at_position(i);
+            Letter letter = word.getLetterAtPosition(i);
 
             // update the positions
-            bool guess_is_correct = letter == correct_word.get_letter_at_position(i);
-            guess_is_correct ? update_letter_is_possible_in_space_with_correct_guess(i, letter) : update_letter_is_possible_in_space_with_incorrect_guess(i, letter);
+            bool guess_is_correct = letter == correct_word.getLetterAtPosition(i);
+            guess_is_correct ? updateLetterIsPossibleInSpaceWithCorrectGuess(i, letter) : updateLetterIsPossibleInSpaceWithIncorrectGuess(i, letter);
 
             // update the count metrics
-            SmallInt count = word.get_letter_count(letter);
-            update_min_letters_with_guess(letter, count);
-            update_max_letters_with_guess(letter, count);
+            Letter count = word.getLetterCount(letter);
+            updateMinLettersWithGuess(letter, count);
+            updateMaxLettersWithGuess(letter, count);
         }
     }
 
-    bool Board::word_could_be_solution(const Word& word) const
+    bool BoardWithKnownAnswer::wordCouldBeSolution(const Word& word) const
     {
 
         // check if the word fits the count constraints
-        for(SmallInt letter_index = 0; letter_index < WORD_LENGTH; ++letter_index)
+        for(std::size_t letter_index = 0; letter_index < WORD_LENGTH; ++letter_index)
         {
-            SmallInt letter = word.get_letter_at_position(letter_index);
-            SmallInt count = word.get_letter_count(letter);
+            Letter letter = word.getLetterAtPosition(letter_index);
+            Letter count = word.getLetterCount(letter);
             if(count < min_letters[letter] || count > max_letters[letter])
                 return false;
-        }
-
-        // check if the word fits the position constraints
-        for(std::size_t i = 0; i < WORD_LENGTH; ++i)
-        {
-            SmallInt letter = word.get_letter_at_position(i);
-            if(!letter_is_possible_in_space[get_position_in_letter_possible_space(i, letter)])
+            if(!letter_is_possible_in_space[getPositionInLetterPossibleSpace(letter_index, letter)])
                 return false;
         }
-
         return true;
     }
 
-    int Board::get_number_of_potential_solutions(const std::vector<Word>& word_list) const
+    int BoardWithKnownAnswer::getNumberOfPotentialSolutions(const std::vector<Word>& word_list) const
     {
         int count = 0;
         for (std::size_t i = 0; i < word_list.size(); ++i)
-            count += word_could_be_solution(word_list[i]);
+            count += wordCouldBeSolution(word_list[i]);
         return count;
     }
 
-    std::vector<Word> Board::get_valid_words(const std::vector<Word>& word_list) const
+    std::vector<Word> BoardWithKnownAnswer::getValidWords(const std::vector<Word>& word_list) const
     {
         std::vector<Word> valid_words;
         valid_words.reserve(word_list.size());
         for (std::size_t i = 0; i < word_list.size(); ++i)
-            if(word_could_be_solution(word_list[i]))
+            if(wordCouldBeSolution(word_list[i]))
                 valid_words.push_back(word_list[i]);
         return valid_words;
     }
 
-    Board Board::copy() const
+    BoardWithKnownAnswer BoardWithKnownAnswer::copy() const
     {
-        Board new_board(correct_word);
-        for(std::size_t i = 0; i < ALPHABET_SIZE * WORD_LENGTH; ++i)
-            new_board.letter_is_possible_in_space[i] = letter_is_possible_in_space[i];
-        for(std::size_t i = 0; i < ALPHABET_SIZE; ++i)
-        {
-            new_board.min_letters[i] = min_letters[i];
-            new_board.max_letters[i] = max_letters[i];
-        }
-        return new_board;
+        return BoardWithKnownAnswer(*this);
+    }
+
+    void BoardWithKnownAnswer::addGreyLetter(std::size_t position, Letter letter)
+    {
+        updateLetterIsPossibleInSpaceWithIncorrectGuess(position, letter);
+    }
+    void BoardWithKnownAnswer::addGreenLetter(std::size_t position, Letter letter)
+    {
+        updateLetterIsPossibleInSpaceWithCorrectGuess(position, letter);
+    }
+    void BoardWithKnownAnswer::addYellowLetter(std::size_t position, Letter letter)
+    {
+        
     }
 } // namespace Wordle

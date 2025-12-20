@@ -11,16 +11,18 @@ namespace Wordle
     {
         public:
         Word(const std::string& word);
-        SmallInt get_letter_at_position(std::size_t position) const { return letters[position]; }
-        SmallInt get_letter_count(SmallInt letter) const { return letter_count[letter]; }
-        inline const std::string get_base_word() const { return base_word; }
-        // assignment operator
+        Word& operator=(const Word& other);
+        Letter getLetterAtPosition(std::size_t position) const { return letters[position]; }
+        Letter getLetterCount(Letter letter) const { return letter_count[letter]; }
+        inline const std::string getBaseWord() const { return base_word; }
+
+
         
 
         private:
         const std::string base_word;
-        SmallInt letters[WORD_LENGTH];
-        SmallInt letter_count[ALPHABET_SIZE];
+        Letter letters[WORD_LENGTH];
+        Letter letter_count[ALPHABET_SIZE];
     };
 }
 #endif // _WORDLE_WORD_HPP___

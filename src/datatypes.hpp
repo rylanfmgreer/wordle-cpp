@@ -3,10 +3,10 @@
 
 namespace Wordle
 {
-    typedef short unsigned int SmallInt;
-    typedef unsigned int LongInt;
-    const SmallInt ALPHABET_SIZE = 26;
-    const SmallInt WORD_LENGTH = 5;
+    typedef short int Letter;
+    typedef int LongInt;
+    const Letter ALPHABET_SIZE = 26;
+    const Letter WORD_LENGTH = 5;
 }
 
 #endif // _datatypes_wordle_hpp
