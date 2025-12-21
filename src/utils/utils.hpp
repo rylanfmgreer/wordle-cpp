@@ -7,7 +7,7 @@
 #ifndef _utils_wordle_hpp
 #define _utils_wordle_hpp
 #include "../datatypes.hpp"
-
+#include <string>
 namespace Wordle
 {
     /**
@@ -17,6 +17,13 @@ namespace Wordle
      */
     inline Letter charToInt(char c) {return c - 'a'; } // 'a' == 97, set 'a' to 0
     
+    /**
+     * @brief Convert a string to lowercase
+     * @param str Input string
+     * @return Lowercase version of the string
+    */
+    
+    std::string toLowerCase(const std::string& str);
     /**
      * @brief Convert a digit character to its numeric value
      * @param c Character ('0'-'9')

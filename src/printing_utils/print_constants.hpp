@@ -1,23 +1,31 @@
+/**
+ * @file print_constants.hpp
+ * @brief ANSI color codes and display constants for fancy terminal output
+ * @author Rylan Greer
+ */
+
 #ifndef PRINT_CONSTANTS_HPP
 #define PRINT_CONSTANTS_HPP
 
 #include <string>
-
+namespace Wordle
+{
 // ANSI color codes for pizzazz!
-const std::string BOLD = "\033[1m";
-const std::string GREEN = "\033[32m";
-const std::string CYAN = "\033[36m";
-const std::string YELLOW = "\033[33m";
-const std::string MAGENTA = "\033[35m";
-const std::string RESET = "\033[0m";
-const std::string BLACK = "\033[30m";
+const std::string BOLD = "\033[1m";        ///< Bold text
+const std::string GREEN = "\033[32m";      ///< Green text color
+const std::string CYAN = "\033[36m";       ///< Cyan text color
+const std::string YELLOW = "\033[33m";     ///< Yellow text color
+const std::string MAGENTA = "\033[35m";    ///< Magenta text color
+const std::string RESET = "\033[0m";       ///< Reset all formatting
+const std::string BLACK = "\033[30m";      ///< Black text color
 
-const std::string BAR_FORMAT = BOLD + BLACK;
-const std::string TOP_BAR = BAR_FORMAT + "  ╔════════════════════════════════╗" + RESET;
-const std::string TITLE_BAR = BAR_FORMAT + "  ║"  "     " + BOLD + BLACK + "🐸 BEST WORDLE GUESS 🐸" + RESET + "    " + BAR_FORMAT + "║" + RESET;
-const std::string MID_BAR = BAR_FORMAT + "  ╠════════════════════════════════╣" + RESET;
-const std::string BOT_BAR = BAR_FORMAT + "  ╚════════════════════════════════╝" + RESET;
+const std::string BAR_FORMAT = BOLD + BLACK;  ///< Format for box borders
+const std::string TOP_BAR = BAR_FORMAT + "  ╔════════════════════════════════╗" + RESET;  ///< Top border
+const std::string TITLE_BAR = BAR_FORMAT + "  ║"  "     " + BOLD + BLACK + "🐸 BEST WORDLE GUESS 🐸" + RESET + "    " + BAR_FORMAT + "║" + RESET;  ///< Title bar with frog emoji
+const std::string MID_BAR = BAR_FORMAT + "  ╠════════════════════════════════╣" + RESET;  ///< Middle separator
+const std::string BOT_BAR = BAR_FORMAT + "  ╚════════════════════════════════╝" + RESET;  ///< Bottom border
 
+/** @brief Large ASCII art frog for special occasions */
 const std::string BIGFROG = " ⠀⠀⠀⠀⠀⠀⠀⠀⣀⡤⡾⢿⣭⣓⢦⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n"
 "⠀⠀⠀⠀⣠⣶⣶⣿⣿⣷⣾⣿⣿⣿⣷⣿⣧⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n"
 "⠀⠀⣠⢴⣿⢟⠻⠟⣛⡻⢿⣟⣿⣿⣿⣿⣾⣿⣳⣶⣤⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n"
@@ -45,4 +53,5 @@ const std::string BIGFROG = " ⠀⠀⠀⠀⠀⠀⠀⠀⣀⡤⡾⢿⣭⣓⢦⡀�
 "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠉⠒⠻⣿⣿⡦⠹⠿⣿⠿⠟⠁⠀⠀⠀⠀⢴⣄⠛⠛⠪⢹⠛⠛⠋⠉⠉⠒⠒⠋⠉⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n"
 "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⠂⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n";
 
+} // namespace Wordle
 #endif // PRINT_CONSTANTS_HPP

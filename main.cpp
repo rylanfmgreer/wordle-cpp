@@ -1,19 +1,38 @@
 #include <iostream>
-#include "src/get_best_word.hpp"
+#include "src/runner/get_best_word.hpp"
+#include "src/runner/backtest.hpp"
 #include "src/printing_utils/print_functions.hpp"
+#include "src/runner/daily_run.hpp"
+#include "src/runner/backtest.hpp"
+#include "src/utils/utils.hpp"
+#include <string>
 int main(int argc, char** argv)
 {
+    std::string RunMode = "daily";
+    // check to see if one of the args is "backtest"
+    for(int i = 1; i < argc; ++i)
+    {
+        std::string arg = Wordle::toLowerCase(argv[i]);
+        if(arg == "backtest")
+        {
+            RunMode = "backtest";
+            break;
+        }
+    }
 
-    // default to wordle_positions.txt if no argument is given
-    std::cout << std::endl << std::endl;    
-    printAssetFromFilename("src/printing_utils/assets/title_asset.txt", BOLD);
-    printAssetFromFilename("src/printing_utils/assets/copyright_info.txt", RESET);
-    //printAssetFromFilename("src/printing_utils/assets/how_to_use.txt");
-    std::string positionFilterFilename = (argc > 1) ? argv[1] : "wordle_positions.txt";
-    bool onlyGuessPossibleWords = true;
-    Wordle::WordScore best_word_score = Wordle::getBestWord(positionFilterFilename, onlyGuessPossibleWords);
-    printBestWord(best_word_score.word);
-    printNumberOfWordsKnockedOut(best_word_score.word.getBaseWord(), best_word_score.numRemainingWords, best_word_score.averageKnockout);
-    std::cout << std::endl << std::endl;
-    return 0;
+    if(RunMode == "backtest")
+    {
+        // find the word to backtest against, default to "raise"
+        std::string startWord = "raise";
+        if(argc > 2)
+        {
+            startWord = Wordle::toLowerCase(argv[2]);
+        }
+        Wordle::standardInitialPrints();
+        Wordle::backtestAllWords(startWord);
+    }
+    else
+    {
+        Wordle::dailyRun(argc, argv);
+    }
 }

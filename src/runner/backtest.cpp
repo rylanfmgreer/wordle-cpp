@@ -33,9 +33,12 @@ namespace Wordle
         return numGuesses;
     }
 
-    void backtestAllWords(const std::string& startWord)
+    void backtestAllWords(const std::string& startWord, bool verbose)
     {
-        standardInialPrints();
+        if (verbose)
+            standardInitialPrints();
+        std::cout << "\nStarting full backtest using starting word: " << startWord << "\n\n";
+        printBigFrog();
         std::vector<Word> allWords = createWordList();
         LongInt totalGuesses = 0;
         LongInt maxGuesses = 0;
@@ -49,7 +52,7 @@ namespace Wordle
                 maxGuesses = numGuesses;
                 hardestWord = word.getBaseWord();
             }
-            std::cout << "Word: " << word.getBaseWord() << " guessed in " << numGuesses << " tries.\n";
+            //std::cout << "Word: " << word.getBaseWord() << " guessed in " << numGuesses << " tries.\n";
         }
         double averageGuesses = static_cast<double>(totalGuesses) / allWords.size();
         std::cout << "  \nAverage number of guesses: " << averageGuesses << "\n";

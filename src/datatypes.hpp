@@ -16,10 +16,10 @@ namespace Wordle
     typedef int LongInt;
     
     /** @brief Number of letters in the English alphabet */
-    const Letter ALPHABET_SIZE = 26;
+    const short int ALPHABET_SIZE = 26;
     
     /** @brief Standard Wordle word length */
-    const Letter WORD_LENGTH = 5;
+    const short int WORD_LENGTH = 5;
 }
 
 #endif // _datatypes_wordle_hpp
