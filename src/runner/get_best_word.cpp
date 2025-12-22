@@ -3,6 +3,8 @@
 #include "../board/board.hpp"
 #include <iostream>
 #include "../filter/filter.hpp"
+#include <string>
+
 namespace Wordle
 {
 
@@ -23,24 +25,19 @@ namespace Wordle
         LongInt infinity = p_wordsThatAreStillPossible.size() * p_wordsThatAreStillPossible.size() + 1;
         std::size_t best_word_index = 0;
         LongInt best_score = infinity;
+        WordResult bestWordResult(p_wordsThatAreStillPossible[0], 0, p_wordsThatAreStillPossible.size());
 
         for(std::size_t guess_word_index(0); guess_word_index < p_wordsAvailableToGuess.size(); ++guess_word_index)
         {
+            // guess the word and see how it does
             const Word& guess_word = p_wordsAvailableToGuess[guess_word_index];
             LongInt this_score = testWordWithExistingGuesses(guess_word, p_alreadyGuessedWords, p_wordsThatAreStillPossible);
-            if(this_score < best_score)
-            {
-                best_score = this_score;
-                best_word_index = guess_word_index;
-            }
-            // this should be a float but it doesn't matter as I don't really care about the exact value
             int average_KO = (infinity - 1 - this_score) / p_wordsThatAreStillPossible.size();
-            if(verbose)
-                printWordKnockout(p_wordsAvailableToGuess[guess_word_index], average_KO);
-
+            if(this_score < bestWordResult.averageKnockout)
+                bestWordResult = WordResult(guess_word, average_KO, p_wordsThatAreStillPossible.size()); 
+            if(verbose) printWordKnockout(p_wordsAvailableToGuess[guess_word_index], average_KO);
         }
-        int best_ko = (infinity - 1 - best_score) / p_wordsThatAreStillPossible.size();
-        return WordResult{p_wordsAvailableToGuess[best_word_index], best_ko, p_wordsThatAreStillPossible.size()};
+        return bestWordResult;
     }
     LongInt testWordWithExistingGuesses(const Word& guess_word, const std::vector<Word>& already_guessed_words, const std::vector<Word>& possible_words)
     {
@@ -66,9 +63,8 @@ namespace Wordle
 
     WordResult getBestWord(const std::string& positionFilterFilename, bool onlyGuessPossibleWords, bool verbose)
     {
-        // I am sure there is a more efficient way to do this...
         std::vector<Word> wordsAvailableToGuess = createWordList();
-        std::vector<Word> possibleWords = createWordList();
+        std::vector<Word> possibleWords(wordsAvailableToGuess);
         
         if(positionFilterFilename != "")
             filterOutImpossibleWords(positionFilterFilename, possibleWords);
@@ -76,7 +72,10 @@ namespace Wordle
         if(onlyGuessPossibleWords)
             wordsAvailableToGuess = possibleWords;
         
-        WordResult best_word_score = getBestWordWithExistingGuesses({}, wordsAvailableToGuess, possibleWords, verbose);
+        WordResult best_word_score = getBestWordWithExistingGuesses({},
+            wordsAvailableToGuess,
+            possibleWords,
+            verbose);
         return best_word_score;
     }
 

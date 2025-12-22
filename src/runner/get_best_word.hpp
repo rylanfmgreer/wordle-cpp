@@ -18,7 +18,10 @@ namespace Wordle
     {
         Word word;
         LongInt averageKnockout;
-        std::size_t numRemainingWords;
+        LongInt numRemainingWords;
+        WordResult(const Word& p_word, LongInt p_averageKnockout, LongInt p_numRemainingWords=0)
+            : word(p_word), averageKnockout(p_averageKnockout), numRemainingWords(p_numRemainingWords) {}
+        WordResult() : word("-----"), averageKnockout(0), numRemainingWords(0) {}
     };
 
     /**

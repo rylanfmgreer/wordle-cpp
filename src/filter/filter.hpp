@@ -7,7 +7,7 @@
 #ifndef _WORDLE_WORD_FILTER_HPP___
 #define _WORDLE_WORD_FILTER_HPP___
 
-#include "word.hpp"
+#include "../word/word.hpp"
 #include "../datatypes.hpp"
 #include <vector>
 #include <string>

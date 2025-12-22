@@ -28,15 +28,13 @@ namespace Wordle
             
             // Copy letters array
             for (std::size_t i = 0; i < WORD_LENGTH; ++i)
-            {   
                 letters[i] = other.letters[i];
-            }
+            
             
             // Copy letter_count array
             for (std::size_t i = 0; i < ALPHABET_SIZE; ++i)
-            {
                 letter_count[i] = other.letter_count[i];
-            }
+            
         }
         return *this;
     }

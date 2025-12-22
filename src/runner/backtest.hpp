@@ -31,7 +31,7 @@ namespace Wordle
      * Tests the solver against every possible target word and reports
      * statistics on performance (average guesses, distribution, etc.).
      */
-    void backtestAllWords(const std::string& startWord=startingWord, bool verbose=true);
+    double backtestAllWords(const std::string& startWord=startingWord, bool verbose=true);
 } // namespace Wordle
 
 #endif
