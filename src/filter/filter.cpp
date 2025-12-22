@@ -18,8 +18,6 @@ namespace Wordle
         std::vector<Word> filtered_words;
         for (const auto& word : word_list)
         {
-            if(word.getBaseWord() == "myrrh")
-                bool debug = true;
             bool thisValid = isWordValid(word);
             if (thisValid)
             {

@@ -37,6 +37,10 @@ namespace Wordle
     {
 
         public:
+        WordFilter() = default;
+        WordFilter(const WordFilter& other) = default;
+        WordFilter& operator=(const WordFilter& other) = default;
+        ~WordFilter() = default;
         /**
          * @brief Filter a word list to only valid words
          * @param word_list The list of words to filter

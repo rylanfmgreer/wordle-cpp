@@ -2,7 +2,7 @@
 #include "../word/create_word_list.hpp"
 #include "../board/board.hpp"
 #include <iostream>
-#include "../word/filter.hpp"
+#include "../filter/filter.hpp"
 namespace Wordle
 {
 
