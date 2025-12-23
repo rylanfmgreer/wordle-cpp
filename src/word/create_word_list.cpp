@@ -16,7 +16,7 @@ namespace Wordle
             Word word(line);
             word_list.push_back(word);
         }
-
+        file.close();
         return word_list;
     }
 }

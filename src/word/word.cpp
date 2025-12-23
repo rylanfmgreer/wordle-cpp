@@ -5,17 +5,20 @@
 namespace Wordle
 {
     Word::Word(const std::string& word)
-    : base_word(toLowerCase(word))
+    : m_baseWord(toLowerCase(word))
     {
-        assert(base_word.length() == WORD_LENGTH);
-        for(std::size_t i = 0; i < ALPHABET_SIZE; ++i)
-            letter_count[i] = 0;
+        // Ensure the word length is correct
+        assert(m_baseWord.length() == WORD_LENGTH);
+
+        // Initialize letter_count to zero
+        std::fill(m_letterCount, m_letterCount + ALPHABET_SIZE, 0);
+
 
         for (std::size_t i = 0; i < WORD_LENGTH; ++i)
         {
-            Letter int_representation = charToInt(base_word[i]);
-            letters[i] = int_representation;
-            letter_count[int_representation]++;
+            Letter letterRepresentation = charToInt(m_baseWord[i]);
+            m_letters[i] = letterRepresentation;
+            m_letterCount[letterRepresentation]++;
         }
     }
 
@@ -24,16 +27,16 @@ namespace Wordle
         if (this != &other)
         {
             // Copy base_word (const_cast needed for const member)
-            const_cast<std::string&>(base_word) = other.base_word;
+            const_cast<std::string&>(m_baseWord) = other.m_baseWord;
             
             // Copy letters array
             for (std::size_t i = 0; i < WORD_LENGTH; ++i)
-                letters[i] = other.letters[i];
+                m_letters[i] = other.m_letters[i];
             
             
             // Copy letter_count array
             for (std::size_t i = 0; i < ALPHABET_SIZE; ++i)
-                letter_count[i] = other.letter_count[i];
+                m_letterCount[i] = other.m_letterCount[i];
             
         }
         return *this;

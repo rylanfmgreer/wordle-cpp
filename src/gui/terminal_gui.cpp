@@ -64,10 +64,10 @@ namespace Wordle
         std::cout << "  " << COLOR_GREY << "3" << COLOR_RESET << " or Space = Grey (not in word)\n";
         std::cout << "  " << BOLD << "4" << COLOR_RESET << " = Add new row (max 6 rows)\n";
         std::cout << "  " << BOLD << "5" << COLOR_RESET << " = Run solver for suggestion\n";
+        std::cout << "  " << BOLD << "6" << COLOR_RESET << " = Quit without saving\n";
+        std::cout << "\n";
         std::cout << "  Backspace = Clear letter\n";
         std::cout << "  Enter = Confirm and save\n";
-        std::cout << "  6 = Quit without saving\n";
-        std::cout << "\n" << BOLD << "Tip:" << COLOR_RESET << " Enter letters first, then mark colors!\n";
     }
 
     void TerminalGUI::display() const
@@ -286,7 +286,7 @@ namespace Wordle
         saveToFile(tempFile);
         
         // Run solver
-        std::cout << "\n" << BOLD << "🔍 Running solver..." << COLOR_RESET << "\n\n";
+        std::cout << "\n" << BOLD << "🐝 Running solver..." << COLOR_RESET << "\n\n";
         try
         {
             WordResult result = getBestWord(tempFile, true, false);

@@ -49,7 +49,7 @@ namespace Wordle
             for (int i = 0; i < 5; ++i)
             {
                 letters[i].letter = ' ';
-                letters[i].status = LetterStatus::UNKNOWN;
+                letters[i].status = LetterStatus::GREY;
                 letters[i].position = i;
             }
         }

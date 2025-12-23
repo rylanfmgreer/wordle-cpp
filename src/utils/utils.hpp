@@ -31,9 +31,19 @@ namespace Wordle
      */
     inline std::size_t intCharToNum (char c) { return static_cast<std::size_t>(c - '0');  } // '0' == 48, set '0' to 0
 
+    /**
+     * @brief Count the number of distinct vowels in a word
+     * @param word Input word
+     * @return Number of distinct vowels (a, e, i, o, u) in the word
+     */
     int countDistinctVowels(const std::string& word);
+
+    /**
+     * @brief Check if a word has any double letters
+     * @param word Input word
+     * @return true if the word contains any letter more than once
+     */
     bool hasDoubleLetters(const std::string& word);
-    std::string toLowerCase(const std::string& str);
 }
 
 #endif

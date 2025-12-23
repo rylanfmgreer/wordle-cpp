@@ -41,32 +41,32 @@ namespace Wordle
          * @param position The position (0-indexed)
          * @return The letter as a numeric value (0-25)
          */
-        Letter getLetterAtPosition(std::size_t position) const { return letters[position]; }
+        Letter getLetterAtPosition(std::size_t position) const { return m_letters[position]; }
         
         /**
          * @brief Get the count of a specific letter in the word
          * @param letter The letter to count (0-25 for A-Z)
          * @return Number of times the letter appears
          */
-        Letter getLetterCount(Letter letter) const { return letter_count[letter]; }
+        Letter getLetterCount(Letter letter) const { return m_letterCount[letter]; }
 
         /**
          * @brief Check if the word contains a specific letter
          * @param letter The letter to check (0-25 for A-Z)
          * @return true if the letter is in the word, false otherwise
          */
-        inline bool getWhetherWordContainsLetter(Letter letter) const { return letter_count[letter] > 0; }
+        inline bool getWhetherWordContainsLetter(Letter letter) const { return m_letterCount[letter] > 0; }
 
         /**
          * @brief Get the original word string
          * @return The word as a string
          */
-        inline const std::string getBaseWord() const { return base_word; }
+        inline const std::string& getBaseWord() const { return m_baseWord; }
 
         private:
-        const std::string base_word;              ///< The original word string
-        Letter letters[WORD_LENGTH];              ///< Letters as numeric values by position
-        Letter letter_count[ALPHABET_SIZE];       ///< Count of each letter in the word
+        const std::string m_baseWord;              ///< The original word string
+        Letter m_letters[WORD_LENGTH];              ///< Letters as numeric values by position
+        Letter m_letterCount[ALPHABET_SIZE];       ///< Count of each letter in the word
     };
 }
 #endif // _WORDLE_WORD_HPP___
