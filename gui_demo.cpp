@@ -9,7 +9,7 @@
 int main()
 {
     std::cout << "Starting Wordle Terminal GUI...\n";
-    std::cout << "Press any key to begin...\n";
+    std::cout << "Press ENTER to begin...\n";
     std::cin.get();
     
     bool success = Wordle::launchTerminalGUI("wordle_positions.txt");
@@ -17,7 +17,7 @@ int main()
     if (success)
     {
         std::cout << "\nYou can now run the solver with:\n";
-        std::cout << "  ./a wordle_positions.txt\n";
+        std::cout << "  ./a wordle_solver\n";
     }
     
     return 0;

@@ -1,7 +1,8 @@
 green:
 i3
+
 yellow:
-t1
+
 
 grey:
-r1 a2 s3 e4 w1 e2 r4 d5 w2 n4 y5
+r1 a2 s4

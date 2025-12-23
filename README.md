@@ -5,6 +5,7 @@ An optimal Wordle solver that finds the best word to guess based on minimizing t
 ## Features
 
 - **Optimal word selection**: Analyzes all possible guesses to find the one that eliminates the most words on average
+- **Interactive terminal GUI**: Visual letter input with colored boxes (green/yellow/grey) 🟩🟨⬛
 - **Position filtering**: Supports input files specifying known letter positions (green/yellow/grey)
 - **Fancy terminal output**: Colorful ASCII art displays with frog emoji 🐸
 - **Backtesting suite**: Test solver performance against all possible target words
@@ -18,19 +19,48 @@ wordle-cpp/
 │   ├── board/          # Game board simulation and constraint tracking
 │   ├── word/           # Word representation and filtering
 │   ├── runner/         # Main solvers and backtesting
+│   ├── gui/            # Interactive terminal GUI for letter input
 │   ├── printing_utils/ # Fancy terminal output functions
 │   └── utils/          # Helper utilities
 ├── main.cpp            # Entry point
+├── gui_demo.cpp        # Standalone GUI demo
 └── wordle_positions.txt # Example position filter file
 ```
 
 ## Building
 
+### Main Solver
+
 ```bash
 g++ -std=c++17 -stdlib=libc++ -g main.cpp $(find src -type f -iregex ".*\.cpp") -o a
 ```
 
+### GUI Demo (Optional)
+
+```bash
+g++ -std=c++17 -stdlib=libc++ -g gui_demo.cpp src/gui/terminal_gui.cpp -o gui_demo
+```
+
 ## Running
+
+### Interactive GUI Mode
+
+Use the terminal GUI to visually input your Wordle guess results:
+
+```bash
+./gui_demo
+```
+
+**Controls:**
+- Type letters (a-z) to enter them
+- Press **G** for green (correct position) 🟩
+- Press **Y** for yellow (wrong position) 🟨
+- Press **Space** for grey (not in word) ⬛
+- Use arrow keys or A/D to navigate
+- Press **Enter** to save and continue
+- Press **Q** to quit
+
+The GUI will save your input to `wordle_positions.txt` which you can then use with the solver.
 
 ### Basic Usage
 
@@ -40,9 +70,9 @@ g++ -std=c++17 -stdlib=libc++ -g main.cpp $(find src -type f -iregex ".*\.cpp") 
 
 If no positions file is provided, it defaults to `wordle_positions.txt`.
 
-### Position Filter File Format
+### Manual Position Filter File Format
 
-The position filter file specifies known information about letter positions:
+Alternatively, you can manually create a position filter file:
 
 ```
 green:
@@ -58,6 +88,33 @@ R1 S2
 - **green**: Letters in correct positions (letter + position)
 - **yellow**: Letters in the word but wrong position
 - **grey**: Letters not in the word
+
+## Quick Start Example
+
+Here's a typical workflow:
+
+1. **Build everything:**
+   ```bash
+   ./build.sh
+   ```
+
+2. **Play Wordle and use the GUI to input your first guess result:**
+   ```bash
+   ./gui_demo
+   ```
+   - Let's say you guessed "RAISE" and got:
+     - R (grey), A (yellow), I (grey), S (grey), E (green at position 5)
+   - Type the letters: `r a i s e`
+   - Mark R, I, S as grey (press Space on each)
+   - Mark A as yellow (press Y)
+   - Mark E as green (press G)
+   - Press Enter to save
+
+3. **Run the solver:**
+   ```bash
+   ./wordle_solver
+   ```
+   The solver will analyze and suggest the best next word!
 
 ## How It Works
 

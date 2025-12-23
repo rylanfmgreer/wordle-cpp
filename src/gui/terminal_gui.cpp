@@ -65,7 +65,7 @@ namespace Wordle
         std::cout << "  " << BOLD << "5" << COLOR_RESET << " = Run solver for suggestion\n";
         std::cout << "  Backspace = Clear letter\n";
         std::cout << "  Enter = Confirm and save\n";
-        std::cout << "  Q = Quit without saving\n";
+        std::cout << "  6 = Quit without saving\n";
         std::cout << "\n" << BOLD << "Tip:" << COLOR_RESET << " Enter letters first, then mark colors!\n";
     }
 
@@ -213,7 +213,7 @@ namespace Wordle
         }
         
         // Handle quit
-        if (chLower == 'q')
+        if (ch == '6')
         {
             return false; // Exit loop, cancelled
         }
@@ -278,14 +278,14 @@ namespace Wordle
             lastSuggestion_ = result.word.getBaseWord();
             std::cout << BOLD << "✅ Best word: " << COLOR_RESET << BOLD << lastSuggestion_ << COLOR_RESET << "\n";
             std::cout << "   Average knockout: " << result.averageKnockout << "\n";
-            std::cout << "\n" << BOLD << "Press any key to return to GUI..." << COLOR_RESET;
+            std::cout << "\n" << BOLD << "Press ENTER to return to GUI..." << COLOR_RESET;
             std::cout.flush();
             getch();
         }
         catch (const std::exception& e)
         {
             std::cout << "❌ Error running solver: " << e.what() << "\n";
-            std::cout << "\n" << BOLD << "Press any key to return to GUI..." << COLOR_RESET;
+            std::cout << "\n" << BOLD << "Press ENTER to return to GUI..." << COLOR_RESET;
             std::cout.flush();
             getch();
         }
