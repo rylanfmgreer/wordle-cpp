@@ -49,7 +49,14 @@ namespace Wordle
          * @return Number of times the letter appears
          */
         Letter getLetterCount(Letter letter) const { return letter_count[letter]; }
-        
+
+        /**
+         * @brief Check if the word contains a specific letter
+         * @param letter The letter to check (0-25 for A-Z)
+         * @return true if the letter is in the word, false otherwise
+         */
+        inline bool getWhetherWordContainsLetter(Letter letter) const { return letter_count[letter] > 0; }
+
         /**
          * @brief Get the original word string
          * @return The word as a string

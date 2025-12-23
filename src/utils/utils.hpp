@@ -30,6 +30,10 @@ namespace Wordle
      * @return Numeric value (0-9)
      */
     inline std::size_t intCharToNum (char c) { return static_cast<std::size_t>(c - '0');  } // '0' == 48, set '0' to 0
+
+    int countDistinctVowels(const std::string& word);
+    bool hasDoubleLetters(const std::string& word);
+    std::string toLowerCase(const std::string& str);
 }
 
 #endif

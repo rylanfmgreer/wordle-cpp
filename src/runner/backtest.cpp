@@ -20,6 +20,7 @@ namespace Wordle
 
         // dummy result object
         WordResult result(currentGuess, 0);
+        Word lastWordGuessed = currentGuess;
         while (possibleWords.size() > 1)
         {
             WordResult result = getBestWordWithExistingGuesses({}, possibleWords, possibleWords,false );
@@ -27,6 +28,11 @@ namespace Wordle
             filter.updateWithGuess(currentGuess, answer);
             possibleWords = filter.filterWordList(possibleWords);
             numGuesses++;
+
+            lastWordGuessed = currentGuess;
+
+            if(numGuesses > 100)
+                break; // safety break
         }
 
         // deal with the fact that we may not have guessed the final word yet
@@ -56,6 +62,12 @@ namespace Wordle
                 hardestWord = word.getBaseWord();
             }
             //std::cout << "Word: " << word.getBaseWord() << " guessed in " << numGuesses << " tries.\n";
+            // progress bar:
+            if (true)
+            {
+                int progress = static_cast<int>((static_cast<double>(&word - &allWords[0]) / allWords.size()) * 100);
+                std::cout << "\rProgress: " << progress << "% completed." << std::flush;
+            }
         }
         double averageGuesses = static_cast<double>(totalGuesses) / allWords.size();
         std::cout << "  \nAverage number of guesses: " << averageGuesses << "\n";

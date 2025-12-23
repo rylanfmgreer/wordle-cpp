@@ -33,7 +33,7 @@ namespace Wordle
             const Word& guess_word = p_wordsAvailableToGuess[guess_word_index];
             LongInt this_score = testWordWithExistingGuesses(guess_word, p_alreadyGuessedWords, p_wordsThatAreStillPossible);
             int average_KO = (infinity - 1 - this_score) / p_wordsThatAreStillPossible.size();
-            if(this_score < bestWordResult.averageKnockout)
+            if(average_KO > bestWordResult.averageKnockout)
                 bestWordResult = WordResult(guess_word, average_KO, p_wordsThatAreStillPossible.size()); 
             if(verbose) printWordKnockout(p_wordsAvailableToGuess[guess_word_index], average_KO);
         }

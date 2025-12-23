@@ -5,15 +5,15 @@
 namespace Wordle
 {
     Word::Word(const std::string& word)
-    : base_word(word)
+    : base_word(toLowerCase(word))
     {
-        assert(word.length() == WORD_LENGTH);
+        assert(base_word.length() == WORD_LENGTH);
         for(std::size_t i = 0; i < ALPHABET_SIZE; ++i)
             letter_count[i] = 0;
 
         for (std::size_t i = 0; i < WORD_LENGTH; ++i)
         {
-            Letter int_representation = charToInt(word[i]);
+            Letter int_representation = charToInt(base_word[i]);
             letters[i] = int_representation;
             letter_count[int_representation]++;
         }
