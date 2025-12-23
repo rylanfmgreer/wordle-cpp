@@ -5,11 +5,13 @@
 
 #include "src/gui/terminal_gui.hpp"
 #include <iostream>
-
+#include "src/printing_utils/print_functions.hpp"
 int main()
 {
-    std::cout << "Starting Wordle Terminal GUI...\n";
-    std::cout << "Press ENTER to begin...\n";
+
+    Wordle::standardInitialPrints();
+    std::cout << "\n  Starting Wordle Terminal GUI...\n";
+    std::cout << "  Press " << Wordle::BOLD << "ENTER" << Wordle::RESET << " to begin...\n";
     std::cin.get();
     
     bool success = Wordle::launchTerminalGUI("wordle_positions.txt");

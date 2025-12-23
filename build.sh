@@ -25,10 +25,10 @@ g++ -std=c++17 -stdlib=libc++ -g gui_demo.cpp \
     src/utils/utils.cpp \
     src/filter/filter.cpp \
     src/printing_utils/print_functions.cpp \
-    -o gui_demo
+    -o solver
 
 if [ $? -eq 0 ]; then
-    echo "✅ GUI demo built successfully -> ./gui_demo"
+    echo "✅ GUI demo built successfully -> ./solver"
 else
     echo "❌ Failed to build GUI demo"
     exit 1
@@ -38,6 +38,6 @@ echo ""
 echo "🎉 Build complete!"
 echo ""
 echo "To use:"
-echo "  1. Run the GUI to input letters:  ./gui_demo"
+echo "  1. Run the GUI to input letters:  ./solver"
 echo "  2. Run the solver:                ./wordle_solver"
 echo ""

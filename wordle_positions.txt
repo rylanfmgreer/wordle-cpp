@@ -5,4 +5,4 @@ yellow:
 
 
 grey:
-r1 a2 s4
+r1 a2 s4 e5 f1 r2 o3 g4

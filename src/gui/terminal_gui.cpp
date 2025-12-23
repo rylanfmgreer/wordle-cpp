@@ -57,7 +57,8 @@ namespace Wordle
     {
         std::cout << "\n" << BOLD << "Controls:" << COLOR_RESET << "\n";
         std::cout << "  Type letters (a-z) to enter\n";
-        std::cout << "  Left/Right arrows to move\n";
+        std::cout << "  Left/Right arrows to move between letters\n";
+        std::cout << "  Up/Down arrows to move between rows\n";
         std::cout << "  " << COLOR_GREEN << "1" << COLOR_RESET << " = Green (correct position)\n";
         std::cout << "  " << COLOR_YELLOW << "2" << COLOR_RESET << " = Yellow (wrong position)\n";
         std::cout << "  " << COLOR_GREY << "3" << COLOR_RESET << " or Space = Grey (not in word)\n";
@@ -148,6 +149,20 @@ namespace Wordle
             else if (ch == 'D' || ch == '4') // Left arrow
             {
                 currentPosition_ = (currentPosition_ - 1 + 5) % 5;
+            }
+            else if (ch == 'A' || ch == '2') // Up arrow
+            {
+                if (currentRow_ > 0)
+                {
+                    currentRow_--;
+                }
+            }
+            else if (ch == 'B' || ch == '5') // Down arrow
+            {
+                if (currentRow_ < static_cast<int>(rows_.size()) - 1)
+                {
+                    currentRow_++;
+                }
             }
             return true;
         }
