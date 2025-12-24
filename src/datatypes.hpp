@@ -20,6 +20,9 @@ namespace Wordle
     
     /** @brief Standard Wordle word length */
     const short int WORD_LENGTH = 5;
+
+    /** @brief The first lowercase letter of the English alphabet */
+    const Letter FIRST_LETTER_OF_ALPHABET = 'a';
 }
 
 #endif // _datatypes_wordle_hpp

@@ -15,7 +15,7 @@ namespace Wordle
      * @param c Character ('a'-'z')
      * @return Numeric value (0-25 where 'a'=0, 'b'=1, etc.)
      */
-    inline Letter charToInt(char c) {return c - 'a'; } // 'a' == 97, set 'a' to 0
+    inline Letter charToInt(char c) {return c - FIRST_LETTER_OF_ALPHABET; } // 'a' == 97, set 'a' to 0
     
     /**
      * @brief Convert a string to lowercase

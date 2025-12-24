@@ -10,10 +10,10 @@ namespace Wordle
         // Ensure the word length is correct
         assert(m_baseWord.length() == WORD_LENGTH);
 
-        // Initialize letter_count to zero
+        // Initialize m_letterCount to zero
         std::fill(m_letterCount, m_letterCount + ALPHABET_SIZE, 0);
 
-
+        // fill in the data in the other arrays
         for (std::size_t i = 0; i < WORD_LENGTH; ++i)
         {
             Letter letterRepresentation = charToInt(m_baseWord[i]);

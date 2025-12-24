@@ -1,8 +1,28 @@
 
 #include "print_functions.hpp"
+#include "print_constants.hpp"
+
 using namespace Wordle;
 namespace Wordle
 {
+    std::string getStringFromAssetFile(const std::string& filename, const std::string& prefix)
+    {
+        std::ifstream file(filename);
+        if (!file.is_open())
+        {
+            std::cerr << "Error: Could not open file " << filename << "\n";
+            return "";
+        }
+        std::string line;
+        std::string output;
+        while (std::getline(file, line))
+        {
+            output += line + "\n";
+        }
+        file.close();
+        return output;
+    }
+
     int printAssetFromFilename(const std::string& filename, const std::string& prefix)
     {
         std::ifstream file(filename);
@@ -33,6 +53,22 @@ namespace Wordle
             std::cout << "\b \b";
         }
     }
+
+    int printStringWithRepeatingColourGradient(const std::string& str, const std::vector<std::string>& color_codes)
+    {
+        int n_chars = 0;
+        std::size_t color_count = color_codes.size();
+        for (std::size_t i = 0; i < str.size(); ++i)
+        {
+            std::string color = color_codes[i % color_count];
+            std::cout << color << str[i] << RESET;
+            n_chars++;
+        }
+        std::cout << "\n";
+        n_chars++; // for the newline
+        return n_chars;
+    }
+
     void blinkAssetNTimes(const std::string& filename, int n_times, int delay_ms, const std::string& prefix)
     {
         for (int i = 0; i < n_times; ++i)
@@ -44,7 +80,7 @@ namespace Wordle
         }
     }   
 
-    std::string generateBestWordPrintStr(const Wordle::Word& best_word)
+    std::string generateBestWordPrintStr(const Word& best_word)
     {
         std::string output;
         std::string emoji = getEmojiFromConfigValue("src/printing_utils/assets/emoji_config.txt");
@@ -109,7 +145,7 @@ namespace Wordle
     }
     void standardInitialPrints()
     {
-        printAssetFromFilename("src/printing_utils/assets/title_asset.txt", BOLD);
+        printAssetFromFilename("src/printing_utils/assets/title_asset.txt", BOLD + BLUE);
         printAssetFromFilename("src/printing_utils/assets/copyright_info.txt", RESET);
     }
 }

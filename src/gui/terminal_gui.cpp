@@ -19,9 +19,11 @@ namespace Wordle
     const std::string COLOR_YELLOW = "\033[43m\033[30m";  // Yellow background, black text
     const std::string COLOR_GREY = "\033[100m\033[37m";   // Grey background, white text
     const std::string COLOR_UNKNOWN = "\033[47m\033[30m"; // White background, black text
-    const std::string COLOR_CURSOR = "\033[7m";           // Inverse colors
+    const std::string COLOR_CURSOR = "\033[7m\033[1m";    // Inverse colors + bold
     const std::string COLOR_RESET = "\033[0m";
     const std::string BOLD = "\033[1m";
+    const std::string UNDERLINE = "\033[4m";
+    const std::string BLINK = "\033[5m";                  // Blink (if terminal supports it)
 
     TerminalGUI::TerminalGUI() : currentRow_(0), currentPosition_(0), lastSuggestion_("")
     {
@@ -46,11 +48,18 @@ namespace Wordle
     void TerminalGUI::displayLetterBox(const LetterInput& input, bool isCurrent) const
     {
         std::string colorCode = getColorCode(input.status);
-        std::string cursor = isCurrent ? COLOR_CURSOR : "";
         
         char displayChar = (input.letter == ' ') ? '_' : std::toupper(input.letter);
         
-        std::cout << cursor << colorCode << " " << displayChar << " " << COLOR_RESET;
+        if (isCurrent)
+        {
+            // Active cell: use blink + bold + underline for maximum visibility
+            std::cout << BLINK << BOLD << UNDERLINE << colorCode << " " << displayChar << " " << COLOR_RESET;
+        }
+        else
+        {
+            std::cout << colorCode << " " << displayChar << " " << COLOR_RESET;
+        }
     }
 
     void TerminalGUI::displayHelp() const
@@ -67,7 +76,7 @@ namespace Wordle
         std::cout << "  " << BOLD << "6" << COLOR_RESET << " = Quit without saving\n";
         std::cout << "\n";
         std::cout << "  Backspace = Clear letter\n";
-        std::cout << "  Enter = Confirm and save\n";
+        std::cout << "  Enter = Run solver for suggestion\n";
     }
 
     void TerminalGUI::display() const
@@ -224,7 +233,8 @@ namespace Wordle
         // Handle enter (confirm)
         if (ch == '\n' || ch == '\r')
         {
-            return false; // Exit loop, confirmed
+            runSolver();
+            return true; // Exit loop, confirmed
         }
         
         // Handle quit

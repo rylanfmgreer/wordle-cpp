@@ -20,7 +20,7 @@ namespace Wordle
      * Reads a text file where each line contains a single word
      * and creates a Word object for each line.
      */
-    std::vector<Word> createWordList(const std::string& filename="src/small_word_list.txt");
+    std::vector<Word> createWordList(const std::string& p_filename="src/small_word_list.txt");
 }
 
 #endif // _create_word_list_wordle_hpp

@@ -8,6 +8,7 @@
 #define PRINT_CONSTANTS_HPP
 
 #include <string>
+#include <vector>
 namespace Wordle
 {
 // ANSI color codes for pizzazz!
@@ -18,6 +19,11 @@ const std::string YELLOW = "\033[33m";     ///< Yellow text color
 const std::string MAGENTA = "\033[35m";    ///< Magenta text color
 const std::string RESET = "\033[0m";       ///< Reset all formatting
 const std::string BLACK = "\033[30m";      ///< Black text color
+const std::string RED = "\033[31m";        ///< Red text color
+const std::string ORANGE = "\033[38;2;255;165;0m"; ///< Orange text color
+const std::string BLUE = "\033[34m";       ///< Blue text color
+
+const std::vector<std::string> FLAME_COLOURS = {RED, RED, YELLOW, YELLOW};
 
 const std::string BAR_FORMAT = BOLD + BLACK;  ///< Format for box borders
 const std::string TOP_BAR = BAR_FORMAT + "  ╔════════════════════════════════╗" + RESET;  ///< Top border

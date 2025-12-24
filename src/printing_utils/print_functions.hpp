@@ -14,6 +14,7 @@
 #include <string>
 #include <thread>
 #include <chrono>
+#include <vector>
 
 namespace Wordle
 {
@@ -85,5 +86,9 @@ namespace Wordle
      * @brief Print the big frog ASCII art
      */
     inline void printBigFrog(){ printAssetFromFilename("src/printing_utils/assets/bigfrog.txt", RESET); }
-}
+
+    std::string getStringFromAssetFile(const std::string& filename, const std::string& prefix = "");
+    
+    int printStringWithRepeatingColourGradient(const std::string& str, const std::vector<std::string>& color_codes);
+}  
 #endif // PRINT_FUNCTIONS_HPP

@@ -4,11 +4,11 @@
 
 namespace Wordle
 {
-    std::vector<Word> createWordList(const std::string& filename)
+    std::vector<Word> createWordList(const std::string& p_filename)
 
     {
         std::vector<Word> word_list;
-        std::ifstream file(filename);
+        std::ifstream file(p_filename);
         std::string line;
 
         while (std::getline(file, line))
