@@ -18,6 +18,11 @@ namespace Wordle
         std::vector<Word> filtered_words;
         for (const auto& word : word_list)
         {
+            if(word.getBaseWord() == "decor") // debug
+            {
+                int debug = 1;
+            }
+
             bool thisValid = isWordValid(word);
             if (thisValid)
             {

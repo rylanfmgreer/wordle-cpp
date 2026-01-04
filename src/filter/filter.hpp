@@ -22,6 +22,10 @@ namespace Wordle
     {
         std::size_t position;  ///< Position in the word (0-indexed)
         Letter letter;         ///< Letter as numeric value (0-25)
+        bool operator==(const LetterPos& other) const
+        {
+            return position == other.position && letter == other.letter;
+        }
     };
 
     /**
@@ -66,21 +70,21 @@ namespace Wordle
          * @param p_position Position in word (0-indexed)
          * @param p_letter Letter at that p_position (0-25)
          */
-        inline void addGreenLetter(std::size_t p_position, Letter p_letter){m_greenLetters.push_back({p_position, p_letter});}
+        inline void addGreenLetter(std::size_t p_position, Letter p_letter){ addLetterIfNotExists(m_greenLetters, {p_position, p_letter});}
         
         /**
          * @brief Add a yellow (wrong position) letter constraint
          * @param p_position Position where letter was guessed (0-indexed)
          * @param p_letter Letter that exists elsewhere (0-25)
          */
-        inline void addYellowLetter(std::size_t p_position, Letter p_letter){m_yellowLetters.push_back({p_position, p_letter});}
+        inline void addYellowLetter(std::size_t p_position, Letter p_letter){ addLetterIfNotExists(m_yellowLetters, {p_position, p_letter});}
         
         /**
          * @brief Add a grey (not in word) letter constraint
          * @param p_position Position where letter was guessed (0-indexed)
          * @param p_letter Letter not in p_word (0-25)
          */
-        inline void addGreyLetter(std::size_t p_position, Letter p_letter){m_greyLetters.push_back({p_position, p_letter});}
+        inline void addGreyLetter(std::size_t p_position, Letter p_letter){ addLetterIfNotExists(m_greyLetters, {p_position, p_letter});}
 
         /**
          * @brief Parse a positions file and populate the filter
@@ -143,6 +147,13 @@ namespace Wordle
          */
         int getMaxPossibleCountOfThisLetterInWord(Letter p_letter) const;
 
+        /**
+         * @brief Add letter-position pair to list if not already present
+         * @param letterList List to add to
+         * @param lp LetterPos to add
+        
+        */
+        void addLetterIfNotExists(std::vector<LetterPos>& letterList, const LetterPos& lp);
 
     };
 
